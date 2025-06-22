@@ -240,7 +240,7 @@ GROUP BY DayOfWeek, HourBlock
 
 **Result:** Users are most active from **12 PM to 9 PM**, especially on **Saturdays from 12–3 PM**.
 
-With this information, we can think of notification strategies at key times, after understanding each person's individual routine with motivating or even funny phrases.
+With this information, we can think of notification strategies at key moments, after understanding each person's individual routine with motivating or even funny phrases to encourage them during a long day of work.
 
 ### Weekday vs Weekend Behavior
 
@@ -268,6 +268,10 @@ GROUP BY
 ![average_active_minutes_weekday_vs_weekend.png](Charts%2Faverage_active_minutes_weekday_vs_weekend.png)
 
 > Activity and sleep efficiency levels tend to be slightly better on weekends.
+
+This could be due to more free time on the weekends than the amount of time spent sleeping efficiently, as we saw earlier, or more freedom to focus on exercise.
+
+Some recommendations that could be considered during this increased user activity on the weekend: it would be interesting to implement a feature in the app to evaluate how the week went and what can be improved, or to create physical activity plans for the following week, which makes the person continue with the project or less likely to deviate from their diet and exercise plan.
 
 
 ### Heart Rate Analysis
