@@ -215,6 +215,7 @@ ORDER BY
 ![activity_vs_sleep_neon.png](Charts%2Factivity_vs_sleep_neon.png)
 
 > Observation: Users who recorded at least 0.4 hours of activity were more likely to get more than 6 hours of sleep. 
+
 There are several studies linking the importance of a good night's sleep and the number of hours of sleep to a better quality of life in general. It would be possible to highlight the importance of physical activity for better nights of sleep and praise when the person manages to reach their goal of hours of sleep and with good efficiency, when measured by the device a relationship between hours asleep/hours in bed.
 
 ### Hourly/Weekly Usage Heatmap
