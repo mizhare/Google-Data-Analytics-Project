@@ -109,7 +109,7 @@ FROM
 
 ### Outlier Detection: Sedentary Time
 
-To detect unusual usage behavior, I sorted the dataset by `SedentaryMinutes`. In there, observed users with extremely low values across all metrics (steps, distance, calories), possibly indicating a user who turned the device on and off without using it.
+To detect unusual usage behavior, I sorted the dataset by `SedentaryMinutes`. In there, observed users with extremely low values across all metrics (steps, distance, calories), possibly indicating a user who turned the device on and off without using it. Some questions arise from this finding: does the application not engage users or is it missing some functionality? Is the battery a problem for the device or is it really a lack of interest from users?
 
 ![Pasted image 20250621122205.png](Images%2FPasted%20image%2020250621122205.png)
 
@@ -123,7 +123,7 @@ ORDER BY SedentaryMinutes ASC
 
 ### Outlier Detection: Calories
 
-Then, sorted by `Calories` in descending order to check for inconsistencies. Some users burned more calories despite recording fewer steps and activity minutes — an indicator of possible errors or edge cases.
+Then, sorted by `Calories` in descending order to check for inconsistencies. Some users burned more calories despite recording fewer steps and activity minutes — an indicator of possible errors or edge cases. It is necessary to investigate whether the application is counting calories incorrectly, whether there is a problem with synchronization between devices. Perhaps allowing people to add their preferred device type, even if it's not from the brand, could create inconsistency. On the other hand, it could also attract more users to the app.
 
 
 ![Pasted image 20250621120211.png](Images%2FPasted%20image%2020250621120211.png)
@@ -165,7 +165,7 @@ As shown in the charts comparing step data, the values are consistent across dat
 
 ### General Profile
 
-Calculated averages for key activity metrics and understanding of the users profile:
+In this section, calculation of averages were performed for key activity metrics and understanding of the users profile:
 
 ```sql
 SELECT
@@ -185,31 +185,37 @@ FROM
 |------------------:|---------------------:|----------------------:|----------------:|-----------------:|-------:|
 | 0.36              | 0.23                 | 3.24                  | 16.42           | 2,330            | 7,736  |
 
-Most users were sedentary for over 16 hours per day. Only 0.59 hours per day were spent in moderate-to-high activity, suggesting a need for more active habits.
+Most users were sedentary for over 16 hours per day. Only 0.59 hours per day were spent in moderate-to-high activity, suggesting a need for more active habits. The app could be improved to understand each person's individual patterns and signal when the person's week had too many sedentary hours, with very little physical activity, motivating and reminding them to exercise. Create global or regional competitions as gamification and recognition of individual effort.
 
 ### Correlation: Activity and Sleep
 
 Joined sleep and activity data to assess relationships between active time and sleep quantity.
 
 ```sql
-CREATE OR REPLACE TABLE `eng-district-463201-h7.FitBit.dailyActivity_Complete` AS
 SELECT
-  da.*,
-  CAST(sd.TotalSleepRecords AS NUMERIC) AS TotalSleepRecords,
-  ROUND(CAST(sd.TotalMinutesAsleep AS NUMERIC) / 60, 2) AS TotalTimeAsleep_Hours,
-  ROUND(CAST(sd.TotalTimeInBed AS NUMERIC) / 60, 2) AS TotalTimeInBed_Hours
+  Id,
+  AVG(
+    ((VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes) / 60.0) / 
+    NULLIF(SedentaryMinutes / 60.0, 0)
+  ) AS AvgActivityRatio,
+  AVG(TotalTimeAsleep_Hours) AS AvgSleep,
+  AVG(TotalTimeAsleep_Hours / NULLIF(TotalTimeInBed_Hours, 0)) AS AvgSleepEfficiency
 FROM
-  `eng-district-463201-h7.FitBit.dailyActivity_Clean` AS da
-LEFT JOIN
-  `eng-district-463201-h7.FitBit.sleepDay` AS sd
-ON
-  TRIM(LOWER(da.Id)) = TRIM(LOWER(sd.Id))
-  AND da.ActivityDate = PARSE_DATE('%m/%d/%Y', SPLIT(sd.SleepDay, ' ')[OFFSET(0)])
+  `eng-district-463201-h7.FitBit.dailyActivity_Clean`
+WHERE
+  SedentaryMinutes IS NOT NULL
+  AND TotalTimeAsleep_Hours IS NOT NULL
+  AND TotalTimeInBed_Hours IS NOT NULL
+GROUP BY
+  Id
+ORDER BY
+  AvgActivityRatio DESC;
 ```
 
 ![activity_vs_sleep_neon.png](Charts%2Factivity_vs_sleep_neon.png)
 
-> Observation: Users who recorded at least 0.4 hours of activity were more likely to get more than 6 hours of sleep.
+> Observation: Users who recorded at least 0.4 hours of activity were more likely to get more than 6 hours of sleep. 
+There are several studies linking the importance of a good night's sleep and the number of hours of sleep to a better quality of life in general. It would be possible to highlight the importance of physical activity for better nights of sleep and praise when the person manages to reach their goal of hours of sleep and with good efficiency, when measured by the device a relationship between hours asleep/hours in bed.
 
 ### Hourly/Weekly Usage Heatmap
 
@@ -233,6 +239,8 @@ GROUP BY DayOfWeek, HourBlock
 ![frequency_days_heatmap2.png](Charts%2Ffrequency_days_heatmap2.png)
 
 **Result:** Users are most active from **12 PM to 9 PM**, especially on **Saturdays from 12–3 PM**.
+
+With this information, we can think of notification strategies at key times, after understanding each person's individual routine with motivating or even funny phrases.
 
 ### Weekday vs Weekend Behavior
 
