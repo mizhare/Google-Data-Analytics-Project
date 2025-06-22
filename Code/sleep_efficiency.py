@@ -3,7 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import ttest_ind
 
-# Estilo dark + neon
 sns.set(context="talk", style="dark", font_scale=1.2, rc={
     "axes.facecolor": "#0d0d0d",
     "figure.facecolor": "#0d0d0d",
@@ -17,14 +16,12 @@ sns.set(context="talk", style="dark", font_scale=1.2, rc={
     "grid.linestyle": "--",
 })
 
-# Carregar dados agregados (resultado da query SQL exportado como CSV)
-df = pd.read_csv("../Files/dailyActivity_SummaryByDayOfWeek.csv")  # substituir pelo nome correto
 
-# Paleta neon para os grupos
+df = pd.read_csv("../Files/dailyActivity_SummaryByDayOfWeek.csv")
+
 palette = {"Weekday": "#47C5FF", "Weekend": "#FF40B6"}
 
 
-# Plot da atividade física em separado
 plt.figure(figsize=(8,5))
 sns.barplot(data=df, x="DayType", y="AvgActiveMinutes", hue="DayType", palette=palette, legend=False)
 plt.title("Average Active Minutes: Weekday vs Weekend", fontsize=20, weight='bold')
