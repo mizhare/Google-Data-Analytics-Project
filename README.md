@@ -259,7 +259,7 @@ GROUP BY
 
 ![average_active_minutes_weekday_vs_weekend.png](Charts%2Faverage_active_minutes_weekday_vs_weekend.png)
 
-> Sleep efficiency and activity levels tend to be slightly better on weekends.
+> Activity and sleep efficiency levels tend to be slightly better on weekends.
 
 
 ### Heart Rate Analysis
