@@ -1,4 +1,6 @@
 
+# Google Capstone: Bellabeat Case Study – FitBit Data
+
 ## About Bellabeat
 
 Bellabeat is a women-focused wellness technology company founded in 2014. Its products include:
@@ -82,8 +84,8 @@ I choosed the `dailyActivity` table as the base for our analysis because it incl
 - Removed empty fields like `LoggedActivitiesDistance`.
 
 
-![[Pasted image 20250621114635.png]]
-![[Pasted image 20250621114742.png]]
+![Pasted image 20250621114635.png](Images%2FPasted%20image%2020250621114635.png)
+![Pasted image 20250621114742.png](Images%2FPasted%20image%2020250621114742.png)
 
 ```sql
 CREATE OR REPLACE TABLE `eng-district-463201-h7.FitBit.dailyActivity_Clean` AS
@@ -109,7 +111,7 @@ FROM
 
 To detect unusual usage behavior, I sorted the dataset by `SedentaryMinutes`. In there, observed users with extremely low values across all metrics (steps, distance, calories), possibly indicating a user who turned the device on and off without using it.
 
-![[Pasted image 20250621122205.png]]
+![Pasted image 20250621122205.png](Images%2FPasted%20image%2020250621122205.png)
 
 ```sql
 SELECT Id, ActivityDate, TotalSteps, TotalDistance,VeryActiveMinutes, FairlyActiveMinutes,LightlyActiveMinutes, SedentaryMinutes, Calories 
@@ -124,7 +126,7 @@ ORDER BY SedentaryMinutes ASC
 Then, sorted by `Calories` in descending order to check for inconsistencies. Some users burned more calories despite recording fewer steps and activity minutes — an indicator of possible errors or edge cases.
 
 
-![[Pasted image 20250621120211.png]]
+![Pasted image 20250621120211.png](Images%2FPasted%20image%2020250621120211.png)
 
 
 ```sql
@@ -156,7 +158,7 @@ ON
 
 As shown in the charts comparing step data, the values are consistent across datasets. This consistency confirms the integrity and reliability of the information.
 
-![[comparison_total_steps.png]]
+![comparison_total_steps.png](Charts%2Fcomparison_total_steps.png)
 ---
 
 ## 4. Analyze
@@ -205,7 +207,7 @@ ON
   AND da.ActivityDate = PARSE_DATE('%m/%d/%Y', SPLIT(sd.SleepDay, ' ')[OFFSET(0)])
 ```
 
-![[activity_vs_sleep_neon.png]]
+![activity_vs_sleep_neon.png](Charts%2Factivity_vs_sleep_neon.png)
 
 > Observation: Users who recorded at least 0.4 hours of activity were more likely to get more than 6 hours of sleep.
 
@@ -228,7 +230,7 @@ FROM
 GROUP BY DayOfWeek, HourBlock
 ```
 
-![[frequency_days_heatmap2 5.png]]
+![frequency_days_heatmap2.png](Charts%2Ffrequency_days_heatmap2.png)
 
 **Result:** Users are most active from **12 PM to 9 PM**, especially on **Saturdays from 12–3 PM**.
 
@@ -255,7 +257,7 @@ GROUP BY
   DayOfWeek, DayType
 ```
 
-![[average_active_minutes_weekday_vs_weekend.png]]
+![average_active_minutes_weekday_vs_weekend.png](Charts%2Faverage_active_minutes_weekday_vs_weekend.png)
 
 > Sleep efficiency and activity levels tend to be slightly better on weekends.
 
@@ -359,8 +361,8 @@ ORDER BY (avg_very_active_minutes + avg_fairly_active_minutes) DESC;
 Individuals with a resting heart rate above **80 bpm** had a **45% higher risk of all-cause mortality** and **33% higher risk of cardiovascular mortality** compared to those with lower heart rates. The risk increases further above 90 bpm.
 > *Source: Zhang D, Shen X, Qi X. Resting heart rate and all-cause and cardiovascular mortality in the general population: a meta-analysis. CMAJ. 2016 Feb 16;188(3):E53-E63. doi: [10.1503/cmaj.150535](https://doi.org/10.1503/cmaj.150535)*  
 
+![elevated_heart_rate_analysis.png](Charts%2Felevated_heart_rate_analysis.png)
 
-![[elevated_heart_rate_analysis.png]]
 
 From the resulting visualization we can observe that:
 

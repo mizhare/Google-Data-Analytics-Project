@@ -1,0 +1,15 @@
+Id,total_days,avg_heart_rate,avg_very_active_minutes,avg_fairly_active_minutes,avg_lightly_active_minutes,avg_sedentary_minutes,activity_level,heart_rate_status
+5577150313,28,69.0,93.6,32,158.5,705.5,Active,Normal Heart Rate
+8877689391,31,82.1,66.1,9.9,234.7,1112.9,Low Active,Normal Heart Rate
+2022484408,31,80.1,36.3,19.4,257.5,1112.6,Low Active,Normal Heart Rate
+7007744171,24,91.1,33.6,17.6,304.1,1078.7,Low Active,Elevated Heart Rate
+4388161847,37,65.1,21.7,24.4,229.8,831.6,Low Active,Normal Heart Rate
+6962181067,31,77.6,22.8,18.5,245.8,662.3,Low Active,Normal Heart Rate
+6775888955,18,96.3,15.9,21.4,57.9,1237,Low Active,Elevated Heart Rate
+5553957443,31,67.8,23.4,13,206.2,668.4,Low Active,Normal Heart Rate
+2347167796,18,76.4,13.5,20.6,252.5,687.2,Low Active,Normal Heart Rate
+4558609924,31,81.6,10.4,13.7,285,1093.6,Sedentary,Normal Heart Rate
+4020332650,16,87.0,10.1,10.4,148.9,1047.3,Sedentary,Elevated Heart Rate
+8792009665,18,72.8,1.6,6.5,147.2,906.6,Sedentary,Normal Heart Rate
+6117666160,23,84.2,1.9,2.5,351,656.3,Sedentary,Normal Heart Rate
+2026352035,4,87.6,0,0,269,783.3,Sedentary,Elevated Heart Rate
